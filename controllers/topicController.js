@@ -8,8 +8,8 @@ const createtopic = async function(req,res){
         if(!data.subjectId){
             return res.status(400).send({success : false,message : "please provide subjectId"})
         }
-        data.logo = req.file ? req.file.path : null
-        data.pdfFile = req.file ? req.file.path : null
+        data.logo = req.files.logo && req.files.logo.length > 0? req.files.logo[0].path : null
+        data.pdfFile = req.files.pdfFile && req.files.pdfFile.length > 0? req.files.pdfFile[0].path : null
         let createtopic = await topicModel.create(data)
         return res.status(200).send({success : true,message : "successfully created your topic",data : createtopic})
     } catch (error) {
@@ -106,8 +106,3 @@ const deletetopic = async function(req,res){
 
 
 module.exports = {createtopic,getAlltopicbySubjectId,gettopicById,updatetopic,deletetopic}
- 
-
-
-
-    
